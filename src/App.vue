@@ -1,6 +1,5 @@
 <script>
 import TimeTracking from '@/components/TimeTraking.vue';
-import Reports from '@/components/Reports.vue';
 import Tasks from '@/components/Task.vue';
 import Notes from '@/components/Notes.vue';
 
@@ -8,7 +7,6 @@ export default {
   name: 'App',
   components: {
     TimeTracking,
-    Reports,
     Tasks,
     Notes
   },
@@ -17,7 +15,6 @@ export default {
       activeTab: 'timeTracking',
       tabs: [
         { id: 'timeTracking', name: 'Saisie d\'Heures' },
-        { id: 'reports', name: 'Rapports' },
         { id: 'tasks', name: 'Tâches' },
         { id: 'notes', name: 'Notes' }
       ]
