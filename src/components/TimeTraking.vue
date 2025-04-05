@@ -136,43 +136,39 @@ export default {
 </script>
 
 <template>
-    <div class="space-y-6">
-        <div class="bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
+    <div class="flex space-x-6">
+        <div class="flex-1 bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-gray-800">Saisie d'Heures</h2>
                 <div class="text-2xl font-mono">{{ formatTime(elapsedTime) }}</div>
             </div>
-
             <div class="flex space-x-4 mb-6">
                 <button @click="startTimer" :disabled="isTimerRunning"
                     class="px-4 py-2 bg-green-600 text-white rounded-md disabled:bg-gray-400">
                     Démarrer
                 </button>
                 <button @click="stopTimer" :disabled="!isTimerRunning"
-                    class="px-4 py-2 bg-red-600 text-slate-500 rounded-md disabled:bg-gray-200">
+                    class="px-4 py-2 bg-red-600 text-slate-900 rounded-md disabled:bg-gray-200">
                     Arrêter
                 </button>
             </div>
-
             <div class="space-y-4">
                 <div>
-                    <label for="activity" class="block text-sm font-medium text-gray-700">Activité</label>
+                    <label for="activity" class="block text-lg font-medium text-gray-700">Activité</label>
                     <input id="activity" v-model="currentActivity" type="text"
-                        class="mt-1 pl-2 block h-10 w-full rounded-md border-gray-300 shadow-sm focus:outline-primary-400"
+                        class="mt-1 pl-2 block h-10 w-full rounded-md bg-white/40 border-gray-300 shadow-sm focus:outline-primary-400"
                         placeholder="Décrivez votre activité" />
                 </div>
-
                 <div>
-                    <label for="description" class="block text-sm font-medium text-gray-700">Description
+                    <label for="description" class="block text-lg font-medium text-gray-700">Description
                         détaillée</label>
                     <textarea id="description" v-model="currentDescription" rows="3"
-                        class="mt-1 pl-2 pt-2 block w-full rounded-md border-gray-300 shadow-sm focus:outline-primary-400"
+                        class="mt-1 pl-2 pt-2 block w-full h-[19rem] resize-none rounded-md bg-white/40 border-gray-300 shadow-sm focus:outline-primary-400"
                         placeholder="Détails sur ce que vous avez fait"></textarea>
                 </div>
-
                 <!-- Ajout de la fonctionnalité d'upload d'image -->
                 <div>
-                    <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+                    <label for="image" class="block text-lg font-medium text-gray-700">Image</label>
                     <div class="mt-1 flex items-center">
                         <input type="file" id="image" ref="imageInput" @change="handleImageUpload" accept="image/*"
                             class="hidden" />
@@ -190,7 +186,6 @@ export default {
                         <img :src="currentImagePreview" alt="Aperçu" class="h-32 object-cover rounded-md" />
                     </div>
                 </div>
-
                 <button @click="saveTimeEntry"
                     class="w-full px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">
                     Enregistrer
@@ -198,9 +193,10 @@ export default {
             </div>
         </div>
 
-        <div class="bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
-            <h3 class="text-lg font-medium text-slate-900 mb-4">Entrées récentes</h3>
-            <div class="space-y-4">
+        <div class="flex-1 bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
+            <h3 class="text-xl font-bold text-black mb-4">Entrées récentes</h3>
+            <div
+                class="space-y-4 h-[40rem] overflow-y-scroll overflow-x-hidden scroll-p-1 custom-scrollbar notes-container">
                 <div v-for="(entry, index) in timeEntries" :key="index" class="border-b pb-4">
                     <div class="flex justify-between">
                         <span class="font-bold text-xl text-primary-300">{{ entry.activity }}</span>
@@ -226,25 +222,51 @@ export default {
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Fenêtre modale de confirmation de suppression -->
-        <div v-if="showDeleteModal"
-            class="bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs fixed inset-0 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-                <h3 class="text-lg font-medium text-gray-900 mb-4">Confirmer la suppression</h3>
-                <p class="text-gray-600 mb-6">
-                    Êtes-vous sûr de vouloir supprimer cette entrée ? Cette action est irréversible.
-                </p>
-                <div class="flex justify-end space-x-3">
-                    <button @click="closeDeleteModal"
-                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
-                        Annuler
-                    </button>
-                    <button @click="confirmDelete" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
-                        Supprimer
-                    </button>
-                </div>
+    <!-- Fenêtre modale de confirmation de suppression -->
+    <div v-if="showDeleteModal"
+        class="bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs fixed inset-0 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Confirmer la suppression</h3>
+            <p class="text-gray-600 mb-6">
+                Êtes-vous sûr de vouloir supprimer cette entrée ? Cette action est irréversible.
+            </p>
+            <div class="flex justify-end space-x-3">
+                <button @click="closeDeleteModal"
+                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                    Annuler
+                </button>
+                <button @click="confirmDelete" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                    Supprimer
+                </button>
             </div>
         </div>
     </div>
 </template>
+
+
+<style scoped>
+/* Styles pour personnaliser la barre de défilement */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f100;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #ffffff71;
+    border-radius: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #5555556e;
+}
+
+.notes-container {
+    padding-right: 10px;
+}
+</style>

@@ -26,12 +26,12 @@ export default {
 <template>
   <div class="min-h-screen bg-[url('@/assets/img/backk.jpg')] bg-cover bg-center">
     <header>
-      <div class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto pt-4 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-white">Suivi du Temps de Travail</h1>
       </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <!-- Navigation Tabs -->
       <div class="border-b border-gray-200 mb-6">
         <nav class="flex -mb-px space-x-8">

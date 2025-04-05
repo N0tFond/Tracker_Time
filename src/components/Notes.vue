@@ -69,8 +69,9 @@ export default {
 </script>
 
 <template>
-    <div class="space-y-6">
-        <div class="bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
+    <div class="flex space-x-6">
+        <!-- Container pour la prise de notes -->
+        <div class="flex-1 bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
             <h2 class="text-xl font-semibold text-black mb-6">Notes Rapides</h2>
             <div class="flex flex-col">
                 <label for="title" class="mb-3">Entrez le titre de votre note</label>
@@ -88,7 +89,13 @@ export default {
                     </button>
                 </div>
             </div>
-            <div class="space-y-4 h-30 overflow-y-scroll overflow-x-hidden scroll-p-1 custom-scrollbar notes-container">
+        </div>
+
+        <!-- Container pour l'affichage des notes -->
+        <div class="flex-1 bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
+            <h3 class="text-lg font-medium text-slate-900 mb-4">Vos Notes</h3>
+            <div
+                class="space-y-4 h-[40rem] overflow-y-scroll overflow-x-hidden scroll-p-1 custom-scrollbar notes-container">
                 <div v-for="(note, index) in notes" :key="index" class="bg-secondary/20 p-4 rounded-lg relative">
                     <button @click="openDeleteModal(index)"
                         class="absolute top-2 right-2 text-xs bg-red-100 hover:bg-red-200 text-red-600 px-2 py-1 rounded">
@@ -105,6 +112,7 @@ export default {
             </div>
         </div>
     </div>
+
     <!-- Fenêtre modale de confirmation de suppression -->
     <div v-if="showDeleteModal"
         class="fixed inset-0 bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs flex items-center justify-center z-50">
@@ -126,6 +134,7 @@ export default {
     </div>
 </template>
 
+
 <style scoped>
 /* Styles pour personnaliser la barre de défilement */
 .custom-scrollbar::-webkit-scrollbar {
@@ -133,7 +142,7 @@ export default {
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-    background: #f1f1f10c;
+    background: #f1f1f100;
     border-radius: 10px;
 }
 

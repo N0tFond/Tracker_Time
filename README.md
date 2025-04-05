@@ -9,7 +9,6 @@ Traker time comme son nom l'indique est un petit site web pour pouvoir suivre so
 ### Qu'elle fonctionnalités ce trouve dans le site ?
 
 - Suivie du temps de travail
-- Rapport détailler sur les dernières heures de travail réaliser
 - Une liste de tache que vous pouvez compléter de vous même
 - Et une section de prise de note
 
@@ -19,9 +18,6 @@ Traker time comme son nom l'indique est un petit site web pour pouvoir suivre so
 
 <p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Saisie de temps </p>
 <img src='/src/assets/img/README/Saisie_Heure.png' style="margin-bottom: 1rem; border-radius: 1rem;">
-
-<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Rapports sur les saisies de temps </p>
-<img src='/src/assets/img/README/Rapports.png' style="margin-bottom: 1rem;  border-radius: 1rem;"/>
 
 <p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Saisies des tâches </p>
 <img src='/src/assets/img/README/Tâches.png' style="margin-bottom: 1rem; border-radius: 1rem;"/>
