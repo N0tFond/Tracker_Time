@@ -222,13 +222,14 @@ export default {
                     <div v-if="entry.image" class="mt-2">
                         <img :src="entry.image" alt="Image de l'activité" class="h-32 object-cover rounded-md" />
                     </div>
-                    <div class="text-xs text-gray-400 mt-1">{{ formatDate(entry.date) }}</div>
+                    <div class="text-xs text-gray-50 mt-1">{{ formatDate(entry.date) }}</div>
                 </div>
             </div>
         </div>
 
         <!-- Fenêtre modale de confirmation de suppression -->
-        <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center z-50">
+        <div v-if="showDeleteModal"
+            class="bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs fixed inset-0 flex items-center justify-center z-50">
             <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Confirmer la suppression</h3>
                 <p class="text-gray-600 mb-6">
