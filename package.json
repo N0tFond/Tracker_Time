@@ -1,5 +1,6 @@
 {
   "author":"NotFound",
+  "description":"Un site tout simple pour la prise de note, l'enregistrement des heures de travail et également quelques autres fonctionnalité",
   "name": "traker_time",
   "version": "0.0.0",
   "private": true,
