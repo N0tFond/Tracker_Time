@@ -93,7 +93,7 @@ export default {
 
         <!-- Container pour l'affichage des notes -->
         <div class="flex-1 bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
-            <h3 class="text-lg font-medium text-slate-900 mb-4">Vos Notes</h3>
+            <h3 class="text-xl font-bold text-black mb-4">Vos Notes</h3>
             <div
                 class="space-y-4 h-[40rem] overflow-y-scroll overflow-x-hidden scroll-p-1 custom-scrollbar notes-container">
                 <div v-for="(note, index) in notes" :key="index" class="bg-secondary/20 p-4 rounded-lg relative">
