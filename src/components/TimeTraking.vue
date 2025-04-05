@@ -149,7 +149,7 @@ export default {
                     Démarrer
                 </button>
                 <button @click="stopTimer" :disabled="!isTimerRunning"
-                    class="px-4 py-2 bg-red-600 text-white rounded-md disabled:bg-gray-400">
+                    class="px-4 py-2 bg-red-600 text-slate-500 rounded-md disabled:bg-gray-200">
                     Arrêter
                 </button>
             </div>
