@@ -1,29 +1,62 @@
-# traker_time
+# Traker time !
 
-This template should help get you started developing with Vue 3 in Vite.
+---
 
-## Recommended IDE Setup
+## Je vous présente 'Traker Time'.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Traker time comme son nom l'indique est un petit site web pour pouvoir suivre son temps de travail, je l'ai développer dans le cadre d'un prochain stage afin de pouvoir suivre mes heures !
 
-## Customize configuration
+### Qu'elle fonctionnalités ce trouve dans le site ?
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+- Suivie du temps de travail
+- Rapport détailler sur les dernières heures de travail réaliser
+- Une liste de tache que vous pouvez compléter de vous même
+- Et une section de prise de note
 
-## Project Setup
+---
 
-```sh
+#### Quelques images :
+
+<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Saisie de temps </p>
+<img src='/src/assets/img/README/Saisie_Heure.png' style="margin-bottom: 1rem; border-radius: 1rem;">
+
+<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Rapports sur les saisies de temps </p>
+<img src='/src/assets/img/README/Rapports.png' style="margin-bottom: 1rem;  border-radius: 1rem;"/>
+
+<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Saisies des tâches </p>
+<img src='/src/assets/img/README/Tâches.png' style="margin-bottom: 1rem; border-radius: 1rem;"/>
+
+<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Prise de notes </p>
+<img src='/src/assets/img/README/Prise_notes.png' style="margin-bottom: 1rem; border-radius: 1rem;"/>
+
+---
+
+### Pour installer le projet :
+
+```bash
+git clone https://github.com/N0tFond/traker_time.git
+```
+
+Ou
+
+```bash
+gh repo clone N0tFond/traker_time
+```
+
+Une fois le repo cloner rendez vous dedans
+
+```bash
+cd traker_time
+```
+
+Installer toutes les dépendance node js
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+Et pour avoir une préview
 
-```sh
+```bash
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
 ```
