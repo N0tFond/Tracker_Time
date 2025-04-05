@@ -9,8 +9,16 @@ export default {
             startTime: null,
             currentActivity: '',
             currentDescription: '',
-            timeEntries: []
+            currentImage: null,
+            currentImagePreview: null,
+            timeEntries: [],
+            showDeleteModal: false,
+            entryToDeleteIndex: null
         }
+    },
+    mounted() {
+        // Charger les entrées depuis le localStorage au démarrage
+        this.loadFromLocalStorage();
     },
     methods: {
         startTimer() {
@@ -31,16 +39,25 @@ export default {
         saveTimeEntry() {
             if (this.elapsedTime === 0 || !this.currentActivity) return;
 
-            this.timeEntries.unshift({
+            const newEntry = {
                 activity: this.currentActivity,
                 description: this.currentDescription,
                 duration: this.elapsedTime,
-                date: new Date()
-            });
+                date: new Date(),
+                image: this.currentImage
+            };
+
+            this.timeEntries.unshift(newEntry);
+
+            // Sauvegarder dans le localStorage
+            this.saveToLocalStorage();
 
             // Reset
             this.elapsedTime = 0;
+            this.currentActivity = '';
             this.currentDescription = '';
+            this.currentImage = null;
+            this.currentImagePreview = null;
             this.stopTimer();
         },
         formatTime(ms) {
@@ -52,6 +69,67 @@ export default {
         },
         formatDate(date) {
             return new Date(date).toLocaleString();
+        },
+        handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            // Vérifier si c'est une image
+            if (!file.type.match('image.*')) {
+                alert('Veuillez sélectionner une image');
+                return;
+            }
+
+            // Créer un aperçu de l'image
+            this.currentImagePreview = URL.createObjectURL(file);
+
+            // Convertir l'image en base64 pour le stockage
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.currentImage = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        },
+        removeImage() {
+            this.currentImage = null;
+            this.currentImagePreview = null;
+            // Réinitialiser l'input file
+            const fileInput = this.$refs.imageInput;
+            if (fileInput) fileInput.value = '';
+        },
+        saveToLocalStorage() {
+            // Convertir les dates en chaînes pour le stockage
+            const entriesToStore = this.timeEntries.map(entry => ({
+                ...entry,
+                date: entry.date.toString()
+            }));
+
+            localStorage.setItem('timeEntries', JSON.stringify(entriesToStore));
+        },
+        loadFromLocalStorage() {
+            const storedEntries = localStorage.getItem('timeEntries');
+            if (storedEntries) {
+                // Reconvertir les chaînes en objets Date
+                this.timeEntries = JSON.parse(storedEntries).map(entry => ({
+                    ...entry,
+                    date: new Date(entry.date)
+                }));
+            }
+        },
+        openDeleteModal(index) {
+            this.entryToDeleteIndex = index;
+            this.showDeleteModal = true;
+        },
+        closeDeleteModal() {
+            this.showDeleteModal = false;
+            this.entryToDeleteIndex = null;
+        },
+        confirmDelete() {
+            if (this.entryToDeleteIndex !== null) {
+                this.timeEntries.splice(this.entryToDeleteIndex, 1);
+                this.saveToLocalStorage();
+                this.closeDeleteModal();
+            }
         }
     }
 }
@@ -71,7 +149,7 @@ export default {
                     Démarrer
                 </button>
                 <button @click="stopTimer" :disabled="!isTimerRunning"
-                    class="px-4 py-2 bg-red-600 text-slate-500 rounded-md disabled:bg-gray-200">
+                    class="px-4 py-2 bg-red-600 text-white rounded-md disabled:bg-gray-400">
                     Arrêter
                 </button>
             </div>
@@ -92,6 +170,27 @@ export default {
                         placeholder="Détails sur ce que vous avez fait"></textarea>
                 </div>
 
+                <!-- Ajout de la fonctionnalité d'upload d'image -->
+                <div>
+                    <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+                    <div class="mt-1 flex items-center">
+                        <input type="file" id="image" ref="imageInput" @change="handleImageUpload" accept="image/*"
+                            class="hidden" />
+                        <label for="image"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md cursor-pointer hover:bg-gray-300">
+                            Choisir une image
+                        </label>
+                        <button v-if="currentImagePreview" @click="removeImage"
+                            class="ml-2 px-2 py-1 bg-red-100 text-red-600 rounded-md hover:bg-red-200">
+                            Supprimer
+                        </button>
+                    </div>
+                    <!-- Aperçu de l'image -->
+                    <div v-if="currentImagePreview" class="mt-2">
+                        <img :src="currentImagePreview" alt="Aperçu" class="h-32 object-cover rounded-md" />
+                    </div>
+                </div>
+
                 <button @click="saveTimeEntry"
                     class="w-full px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700">
                     Enregistrer
@@ -100,15 +199,49 @@ export default {
         </div>
 
         <div class="bg-white/40 bg-clip-padding backdrop-filter backdrop-blur-xs shadow rounded-lg p-6">
-            <h3 class="text-lg font-medium text-gray-800 mb-4">Entrées récentes</h3>
+            <h3 class="text-lg font-medium text-slate-900 mb-4">Entrées récentes</h3>
             <div class="space-y-4">
                 <div v-for="(entry, index) in timeEntries" :key="index" class="border-b pb-4">
                     <div class="flex justify-between">
-                        <span class="font-medium">{{ entry.activity }}</span>
-                        <span class="text-gray-500">{{ formatTime(entry.duration) }}</span>
+                        <span class="font-bold text-xl text-primary-300">{{ entry.activity }}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-gray-50">{{ formatTime(entry.duration) }}</span>
+                            <button @click="openDeleteModal(index)"
+                                class="text-red-500 hover:text-red-700 p-1 rounded-full hover:bg-red-100"
+                                title="Supprimer cette entrée">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
-                    <p class="text-gray-600 text-sm mt-1">{{ entry.description }}</p>
+                    <p class="text-gray-200 text-sm mt-1">{{ entry.description }}</p>
+                    <!-- Affichage de l'image si elle existe -->
+                    <div v-if="entry.image" class="mt-2">
+                        <img :src="entry.image" alt="Image de l'activité" class="h-32 object-cover rounded-md" />
+                    </div>
                     <div class="text-xs text-gray-400 mt-1">{{ formatDate(entry.date) }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fenêtre modale de confirmation de suppression -->
+        <div v-if="showDeleteModal" class="fixed inset-0 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Confirmer la suppression</h3>
+                <p class="text-gray-600 mb-6">
+                    Êtes-vous sûr de vouloir supprimer cette entrée ? Cette action est irréversible.
+                </p>
+                <div class="flex justify-end space-x-3">
+                    <button @click="closeDeleteModal"
+                        class="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300">
+                        Annuler
+                    </button>
+                    <button @click="confirmDelete" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700">
+                        Supprimer
+                    </button>
                 </div>
             </div>
         </div>
