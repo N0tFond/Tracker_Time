@@ -1,57 +1,57 @@
-# Traker time !
+# Tracker time !
 
 ---
 
-## Je vous présente 'Traker Time'.
+## Let me introduce 'Tracker Time'.
 
-Traker time comme son nom l'indique est un petit site web pour pouvoir suivre son temps de travail, je l'ai développer dans le cadre d'un prochain stage afin de pouvoir suivre mes heures !
+As the name suggests, Traker Time is a small website to track your working hours. I developed it for an upcoming internship to help me track my hours!
 
-### Qu'elle fonctionnalités ce trouve dans le site ?
+### What features can be found on the site?
 
-- Suivie du temps de travail
-- Une liste de tache que vous pouvez compléter de vous même
-- Et une section de prise de note
+- Work time tracking
+- A task list that you can complete on your own
+- And a note-taking section
 
 ---
 
-#### Quelques images :
+#### Some images:
 
-<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Saisie de temps </p>
+<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Time Entry </p>
 <img src='/src/assets/img/README/Saisie_Heure.png' style="margin-bottom: 1rem; border-radius: 1rem;">
 
-<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Saisies des tâches </p>
+<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Task Entries </p>
 <img src='/src/assets/img/README/Tâches.png' style="margin-bottom: 1rem; border-radius: 1rem;"/>
 
-<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Prise de notes </p>
+<p style="display: flex; justify-content: center; font-size: 24px; font-weight: bold;"> Note Taking </p>
 <img src='/src/assets/img/README/Prise_notes.png' style="margin-bottom: 1rem; border-radius: 1rem;"/>
 
 ---
 
-### Pour installer le projet :
+### To install the project:
 
 ```bash
 git clone https://github.com/N0tFond/traker_time.git
 ```
 
-Ou
+Or
 
 ```bash
 gh repo clone N0tFond/traker_time
 ```
 
-Une fois le repo cloner rendez vous dedans
+Once the repo is cloned, navigate to the project folder:
 
 ```bash
 cd traker_time
 ```
 
-Installer toutes les dépendance node js
+Install all the Node.js dependencies:
 
 ```bash
 npm install
 ```
 
-Et pour avoir une préview
+And to preview the project:
 
 ```bash
 npm run dev
